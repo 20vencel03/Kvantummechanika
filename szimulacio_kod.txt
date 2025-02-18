@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Constants for Morse potential
+De = 4.75  # Dissociation energy in eV
+a = 1.02  # Range parameter in inverse angstroms
+re = 0.74  # Equilibrium bond distance in angstroms
+
+# Define the Morse Potential function
+def morse_potential(r, De, a, re):
+    return De * (1 - np.exp(-a * (r - re)))**2
+
+# Define the Harmonic Oscillator Potential function
+def harmonic_oscillator_potential(r, De, re):
+    k = 2 * De / re**2  # Force constant
+    return 0.5 * k * (r - re)**2
+
+# Generate a range of internuclear distances
+r = np.linspace(0.1, 5, 200)
+
+# Calculate the potential energies
+morse_potential_energy = morse_potential(r, De, a, re)
+harmonic_potential_energy = harmonic_oscillator_potential(r, De, re)
+
+# Plotting the results
+plt.figure(figsize=(7, 5))
+plt.plot(r, morse_potential_energy, label='Morse Potential', color='blue')
+plt.plot(r, harmonic_potential_energy, label='Harmonic Oscillator Potential', linestyle='dashed', color='orange')
+plt.axhline(y=De, color='red', linestyle='dashed', label='Dissociation Energy (4.75 eV)')
+plt.title('Morse and Harmonic Oscillator Potentials for H2 Molecule')
+plt.xlabel('Internuclear Distance r (Å)')
+plt.ylabel('Potential Energy (eV)')
+plt.ylim(-2, 5)
+plt.xlim(-1, 5)
+plt.legend()
+plt.grid(True)
+plt.show()
